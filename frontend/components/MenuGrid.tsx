@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { Search } from "lucide-react";
 import { FoodItem } from "@/lib/types";
 import { fetchMenu } from "@/lib/api";
@@ -52,6 +53,7 @@ export default function MenuGrid() {
 
   return (
     <div>
+      {/* Category pills with animated indicator */}
       <div className="flex flex-col lg:flex-row gap-4 lg:items-center lg:justify-between mb-8">
         <div className="flex flex-wrap gap-2">
           {categories.map((c) => (
@@ -61,17 +63,25 @@ export default function MenuGrid() {
                 setCategory(c.value);
                 setPage(1);
               }}
-              className={`px-4 py-2 text-xs eyebrow border transition-colors ${
+              className={`relative px-4 py-2 text-xs eyebrow rounded-full border transition-colors duration-200 ${
                 category === c.value
-                  ? "bg-gold text-charcoal border-gold"
-                  : "border-gold/20 text-cream/60 hover:border-gold/50"
+                  ? "text-charcoal border-gold"
+                  : "border-gold/20 text-cream/60 hover:border-gold/50 hover:text-cream/90"
               }`}
             >
-              {c.label}
+              {category === c.value && (
+                <motion.span
+                  layoutId="category-pill"
+                  className="absolute inset-0 rounded-full bg-gold"
+                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                />
+              )}
+              <span className="relative">{c.label}</span>
             </button>
           ))}
         </div>
 
+        {/* Search input */}
         <div className="relative w-full lg:w-64">
           <Search
             size={16}
@@ -84,13 +94,14 @@ export default function MenuGrid() {
               setPage(1);
             }}
             placeholder="Search the menu"
-            className="w-full bg-charcoal-soft border border-gold/15 rounded-sm py-2.5 pl-9 pr-3 text-sm text-cream placeholder:text-cream/30 focus:border-gold/50 outline-none"
+            className="w-full bg-charcoal-soft border border-gold/15 rounded-full py-2.5 pl-9 pr-3 text-sm text-cream placeholder:text-cream/30 focus:border-gold/50 outline-none transition-colors"
           />
         </div>
       </div>
 
+      {/* Filter toggles */}
       <div className="flex flex-wrap gap-6 items-center mb-10 text-sm text-cream/60">
-        <label className="flex items-center gap-2 cursor-pointer">
+        <label className="flex items-center gap-2 cursor-pointer hover:text-cream/80 transition-colors">
           <input
             type="checkbox"
             checked={vegOnly}
@@ -102,7 +113,7 @@ export default function MenuGrid() {
           />
           Veg only
         </label>
-        <label className="flex items-center gap-2 cursor-pointer">
+        <label className="flex items-center gap-2 cursor-pointer hover:text-cream/80 transition-colors">
           <input
             type="checkbox"
             checked={spicyOnly}
@@ -131,28 +142,61 @@ export default function MenuGrid() {
         </label>
       </div>
 
+      {/* Loading skeleton */}
       {loading ? (
-        <p className="text-cream/40 text-sm">Loading menu…</p>
-      ) : paged.length === 0 ? (
-        <p className="text-cream/40 text-sm">No dishes match those filters.</p>
-      ) : (
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {paged.map((item) => (
-            <FoodCard key={item.id} item={item} />
+          {Array.from({ length: 8 }).map((_, i) => (
+            <div
+              key={i}
+              className="rounded-2xl bg-charcoal-soft border border-gold/10 overflow-hidden"
+            >
+              <div className="aspect-[4/3] bg-charcoal-light animate-pulse" />
+              <div className="p-5 space-y-3">
+                <div className="h-4 w-3/4 bg-charcoal-light rounded animate-pulse" />
+                <div className="h-3 w-full bg-charcoal-light rounded animate-pulse" />
+                <div className="h-3 w-1/2 bg-charcoal-light rounded animate-pulse" />
+              </div>
+            </div>
           ))}
         </div>
+      ) : paged.length === 0 ? (
+        <div className="text-center py-20">
+          <p className="text-cream/30 font-display italic text-lg">No dishes match those filters.</p>
+          <p className="text-cream/20 text-sm mt-2">Try adjusting the category or price range.</p>
+        </div>
+      ) : (
+        <motion.div
+          layout
+          className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"
+        >
+          <AnimatePresence mode="popLayout">
+            {paged.map((item) => (
+              <motion.div
+                key={item.id}
+                layout
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.25 }}
+              >
+                <FoodCard item={item} />
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
       )}
 
+      {/* Pagination */}
       {totalPages > 1 && (
-        <div className="flex justify-center gap-2 mt-10">
+        <div className="flex justify-center gap-2 mt-12">
           {Array.from({ length: totalPages }).map((_, i) => (
             <button
               key={i}
               onClick={() => setPage(i + 1)}
-              className={`w-8 h-8 text-xs border ${
+              className={`w-9 h-9 rounded-full text-xs border transition-all duration-200 ${
                 page === i + 1
-                  ? "bg-gold text-charcoal border-gold"
-                  : "border-gold/20 text-cream/50 hover:border-gold/50"
+                  ? "bg-gold text-charcoal border-gold shadow-[0_0_12px_rgba(201,162,75,0.3)]"
+                  : "border-gold/20 text-cream/50 hover:border-gold/50 hover:text-cream"
               }`}
             >
               {i + 1}

@@ -55,3 +55,70 @@ select:focus-visible {
 .text-balance {
   text-wrap: balance;
 }
+
+/* ── Premium Input Styles ── */
+.input-luxury {
+  width: 100%;
+  background: #211c15;
+  border: 1px solid rgba(201, 162, 75, 0.15);
+  border-radius: 0.75rem;
+  padding: 0.875rem 1rem;
+  color: #f4eedf;
+  font-size: 0.875rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.input-luxury::placeholder {
+  color: rgba(244, 238, 223, 0.3);
+}
+.input-luxury:focus {
+  outline: none;
+  border-color: rgba(201, 162, 75, 0.5);
+  box-shadow: 0 0 0 3px rgba(201, 162, 75, 0.08);
+}
+
+/* ── Custom Scrollbar ── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #17140F;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(201, 162, 75, 0.25);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(201, 162, 75, 0.45);
+}
+
+/* ── Range Input Styling ── */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  background: rgba(201, 162, 75, 0.2);
+  border-radius: 2px;
+  outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #C9A24B;
+  cursor: pointer;
+  border: 2px solid #17140F;
+  box-shadow: 0 0 8px rgba(201, 162, 75, 0.4);
+}
+
+/* ── Checkbox Styling ── */
+input[type="checkbox"] {
+  accent-color: #C9A24B;
+}
+
+/* ── Gold Divider ── */
+.divider-gold {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201, 162, 75, 0.3), transparent);
+}

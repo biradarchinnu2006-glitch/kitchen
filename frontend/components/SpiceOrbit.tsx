@@ -1,3 +1,7 @@
+"use client";
+
+import { motion } from "framer-motion";
+
 const spices = [
   { label: "Star Anise", radius: 170, duration: 22, size: 34, delay: 0 },
   { label: "Cinnamon", radius: 140, duration: 16, size: 26, delay: -4 },
@@ -6,50 +10,54 @@ const spices = [
   { label: "Chilli", radius: 190, duration: 20, size: 18, delay: -12 },
 ];
 
-/**
- * This is the site's signature element: a hand-built substitute for a
- * photoreal 3D biryani-bowl render (that needs real modelled/textured
- * assets we don't have). It reads as intentional rather than a
- * placeholder, and the mount point below is where a React Three Fiber
- * <Canvas> with a real GLTF model can be dropped in later without
- * touching the surrounding layout.
- */
 export default function SpiceOrbit({ size = 460 }: { size?: number }) {
   return (
     <div
-      className="relative mx-auto"
+      className="relative mx-auto flex items-center justify-center"
       style={{ width: size, height: size }}
       aria-hidden="true"
     >
-      {/* steam */}
-      <div className="absolute left-1/2 top-[8%] -translate-x-1/2 flex gap-3">
+      {/* Steam rising effect */}
+      <div className="absolute left-1/2 top-[5%] -translate-x-1/2 flex gap-3 z-10 pointer-events-none">
         {[0, 1, 2].map((i) => (
           <span
             key={i}
-            className="block w-2 h-16 rounded-full bg-gradient-to-t from-cream/0 via-cream/40 to-cream/0 animate-rise"
-            style={{ animationDelay: `${i * 0.5}s` }}
+            className="block w-1.5 h-20 rounded-full bg-gradient-to-t from-cream/0 via-gold/25 to-cream/0 animate-rise"
+            style={{ animationDelay: `${i * 0.7}s` }}
           />
         ))}
       </div>
 
-      {/* bowl */}
-      <div
-        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-gold/40 shadow-[0_0_80px_-10px_rgba(201,162,75,0.35)]"
+      {/* Central Food Plate (Hyderabadi Chicken Biryani) */}
+      <motion.div
+        className="absolute rounded-full border border-gold/30 p-1.5 shadow-[0_0_80px_-10px_rgba(201,162,75,0.4)] bg-charcoal/80 backdrop-blur-sm z-20 cursor-pointer overflow-hidden"
         style={{
-          width: size * 0.52,
-          height: size * 0.52,
-          background:
-            "radial-gradient(circle at 35% 30%, #E0BB66 0%, #B3611C 45%, #4A3220 100%)",
+          width: size * 0.58,
+          height: size * 0.58,
         }}
+        whileHover={{ 
+          scale: 1.05,
+          borderColor: "rgba(201,162,75,0.6)",
+          boxShadow: "0 0 90px -5px rgba(201,162,75,0.55)"
+        }}
+        transition={{ type: "spring", stiffness: 200, damping: 20 }}
       >
-        <div className="absolute inset-4 rounded-full border border-charcoal/40 bg-charcoal/10 backdrop-blur-sm" />
-      </div>
+        <div className="relative w-full h-full rounded-full overflow-hidden border border-gold/20">
+          <img
+            src="/images/hero/biryani_hero.png"
+            alt="Michelin-star Hyderabadi Chicken Biryani"
+            className="w-full h-full object-cover transition-transform duration-[1.5s] ease-out hover:scale-110"
+          />
+          {/* Subtle gold overlay vignette */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_55%,rgba(10,9,7,0.65))] pointer-events-none" />
+        </div>
+      </motion.div>
 
-      {/* orbiting spices */}
+      {/* Orbiting spices */}
       {spices.map((s) => (
         <div
           key={s.label}
-          className="absolute left-1/2 top-1/2 animate-orbit"
+          className="absolute left-1/2 top-1/2 animate-orbit z-30"
           style={
             {
               "--r": `${s.radius}px`,
@@ -60,10 +68,11 @@ export default function SpiceOrbit({ size = 460 }: { size?: number }) {
             } as React.CSSProperties
           }
         >
-          <div
-            className="rounded-full bg-gold/20 border border-gold/50"
+          <motion.div
+            className="rounded-full bg-gradient-to-br from-gold-bright/35 to-gold/10 border border-gold/45 shadow-[0_0_12px_rgba(201,162,75,0.45)] backdrop-blur-[1px] hover:scale-125 transition-transform"
             style={{ width: s.size, height: s.size }}
             title={s.label}
+            whileHover={{ scale: 1.25 }}
           />
         </div>
       ))}
