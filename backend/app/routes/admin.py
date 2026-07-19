@@ -50,3 +50,11 @@ def export_orders_csv(db: Session = Depends(get_db), _admin=Depends(get_current_
         media_type="text/csv",
         headers={"Content-Disposition": "attachment; filename=orders.csv"},
     )
+# ---------------- ORDERS ----------------
+
+@router.get("/orders")
+def list_orders(
+    db: Session = Depends(get_db),
+    _admin=Depends(get_current_admin),
+):
+    return db.query(Order).order_by(Order.created_at.desc()).all()

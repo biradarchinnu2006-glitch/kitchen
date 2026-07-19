@@ -53,3 +53,12 @@ def get_current_admin(
     if admin is None:
         raise credentials_error
     return admin
+
+
+def require_superadmin(admin: Admin = Depends(get_current_admin)) -> Admin:
+    if not admin.is_superadmin:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Only a superadmin can perform this action",
+        )
+    return admin

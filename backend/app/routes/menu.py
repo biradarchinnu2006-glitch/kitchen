@@ -46,6 +46,15 @@ def get_menu_item(product_id: str, db: Session = Depends(get_db)):
 
 # ---- Admin-only mutations ----
 
+@router.get("/admin/products", response_model=list[ProductOut])
+def list_all_products(
+    db: Session = Depends(get_db),
+    _admin=Depends(get_current_admin),
+):
+    """Full catalogue including inactive items, for the admin dashboard."""
+    return db.query(Product).order_by(Product.category, Product.name).all()
+
+
 @router.post("/admin/products", response_model=ProductOut)
 def create_product(
     payload: ProductCreate,

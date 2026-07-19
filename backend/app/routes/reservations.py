@@ -6,10 +6,12 @@ from app.database import get_db
 from app.models import Reservation
 from app.schemas import ReservationCreate, ReservationOut
 
-router = APIRouter(tags=["reservations"])
+# UPDATED: Added prefix here so it routes perfectly
+router = APIRouter(prefix="/reservations", tags=["reservations"])
 
 
-@router.post("/reservations", response_model=ReservationOut)
+# UPDATED: Changed path from "/reservations" to "/" to fix the 404 double-URL loop
+@router.post("/", response_model=ReservationOut)
 def create_reservation(payload: ReservationCreate, db: Session = Depends(get_db)):
     reservation = Reservation(
         name=payload.name,
@@ -25,12 +27,14 @@ def create_reservation(payload: ReservationCreate, db: Session = Depends(get_db)
     return reservation
 
 
-@router.get("/admin/reservations", response_model=list[ReservationOut])
+# UPDATED: Shortened standard admin paths
+@router.get("/admin", response_model=list[ReservationOut])
 def list_reservations(db: Session = Depends(get_db), _admin=Depends(get_current_admin)):
     return db.query(Reservation).order_by(Reservation.created_at.desc()).all()
 
 
-@router.post("/admin/reservations/{reservation_id}/confirm", response_model=ReservationOut)
+# UPDATED: Shortened confirmation path
+@router.post("/admin/{reservation_id}/confirm", response_model=ReservationOut)
 def confirm_reservation(
     reservation_id: str,
     db: Session = Depends(get_db),

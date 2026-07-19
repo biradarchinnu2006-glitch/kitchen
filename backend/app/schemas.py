@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Optional
 
-from pydantic import BaseModel, EmailStr, Field, field_validator
+from pydantic import BaseModel, EmailStr, Field, computed_field, field_validator
 
 from app.models import Category, OrderStatus, SpiceLevel
 
@@ -164,7 +164,20 @@ class AdminOut(BaseModel):
     email: EmailStr
     full_name: str
     is_superadmin: bool
+    created_at: datetime
     model_config = {"from_attributes": True}
+
+    @computed_field
+    @property
+    def role(self) -> str:
+        return "superadmin" if self.is_superadmin else "staff"
+
+
+class StaffCreate(BaseModel):
+    email: EmailStr
+    password: str = Field(min_length=8)
+    full_name: str = Field(min_length=2)
+    is_superadmin: bool = False
 
 
 # ---------- Chatbot ----------
