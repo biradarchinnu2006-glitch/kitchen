@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: surekhas-kitchen-api
+    runtime: python
+    region: singapore
+    plan: free
+    buildCommand: pip install -r requirements.txt && python bootstrap_admin.py && python seed_premium_menu.py
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: DATABASE_URL
+        value: sqlite:///./surekhas_kitchen.db
+      - key: JWT_SECRET
+        value: surekhas-kitchen-super-secret-key-2026
+      - key: PYTHON_VERSION
+        value: "3.11.9"

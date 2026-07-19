@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
 from app.database import Base, engine
-from app.routes import admin, auth, chatbot, contact, menu, orders, reservations
+from app.routes import admin, auth, chatbot, contact, menu, orders, reservations, staff
 
 Base.metadata.create_all(bind=engine)
 
@@ -13,10 +13,11 @@ app = FastAPI(
     version="1.0.0",
 )
 
+# Allow all origins for cloud deployment (Surge, GitHub Pages, localhost, custom domains)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.cors_origins,
-    allow_credentials=True,
+    allow_origins=["*"],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -28,6 +29,7 @@ app.include_router(orders.router)
 app.include_router(chatbot.router)
 app.include_router(auth.router)
 app.include_router(admin.router)
+app.include_router(staff.router)
 
 
 @app.get("/")
