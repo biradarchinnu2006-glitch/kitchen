@@ -10,7 +10,7 @@ export default function WhatsAppButton() {
       target="_blank"
       rel="noreferrer"
       aria-label="Order on WhatsApp"
-      className="fixed bottom-20 md:bottom-6 left-5 z-40 w-13 h-13 md:w-14 md:h-14 rounded-full bg-[#25D366] text-charcoal flex items-center justify-center shadow-xl shadow-black/50 hover:scale-110 active:scale-95 transition-all"
+      className="fixed bottom-6 left-6 z-40 w-14 h-14 rounded-full bg-[#25D366] text-charcoal flex items-center justify-center shadow-lg shadow-black/40 hover:scale-105 transition-transform"
     >
       <MessageCircle size={26} />
     </a>

@@ -1,81 +1,129 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
+import { Sparkles, Clock } from "lucide-react";
 
-const spices = [
-  { label: "Star Anise", radius: 170, duration: 22, size: 34, delay: 0 },
-  { label: "Cinnamon", radius: 140, duration: 16, size: 26, delay: -4 },
-  { label: "Cardamom", radius: 200, duration: 26, size: 20, delay: -9 },
-  { label: "Bay Leaf", radius: 120, duration: 14, size: 22, delay: -2 },
-  { label: "Chilli", radius: 190, duration: 20, size: 18, delay: -12 },
-];
-
-export default function SpiceOrbit({ size = 460 }: { size?: number }) {
+export default function SpiceOrbit() {
   return (
-    <div
-      className="relative mx-auto flex items-center justify-center"
-      style={{ width: size, height: size }}
-      aria-hidden="true"
-    >
-      {/* Steam rising effect */}
-      <div className="absolute left-1/2 top-[5%] -translate-x-1/2 flex gap-3 z-10 pointer-events-none">
-        {[0, 1, 2].map((i) => (
-          <span
-            key={i}
-            className="block w-1.5 h-20 rounded-full bg-gradient-to-t from-cream/0 via-gold/25 to-cream/0 animate-rise"
-            style={{ animationDelay: `${i * 0.7}s` }}
-          />
-        ))}
-      </div>
+    <div className="relative mx-auto flex items-center justify-center w-full max-w-[650px] aspect-square">
 
-      {/* Central Food Plate (Hyderabadi Chicken Biryani) */}
+      {/* Ambient Glow */}
+      <div className="absolute w-[130%] h-[130%] rounded-full bg-[radial-gradient(circle,rgba(201,162,75,0.14),transparent_70%)] blur-3xl" />
+
+      {/* Decorative Rings */}
       <motion.div
-        className="absolute rounded-full border border-gold/30 p-1.5 shadow-[0_0_80px_-10px_rgba(201,162,75,0.4)] bg-charcoal/80 backdrop-blur-sm z-20 cursor-pointer overflow-hidden"
-        style={{
-          width: size * 0.58,
-          height: size * 0.58,
+        animate={{ rotate: 360 }}
+        transition={{
+          duration: 120,
+          repeat: Infinity,
+          ease: "linear",
         }}
-        whileHover={{ 
-          scale: 1.05,
-          borderColor: "rgba(201,162,75,0.6)",
-          boxShadow: "0 0 90px -5px rgba(201,162,75,0.55)"
+        className="absolute w-[112%] h-[112%] rounded-full border border-gold/10"
+      />
+
+      <motion.div
+        animate={{ rotate: -360 }}
+        transition={{
+          duration: 90,
+          repeat: Infinity,
+          ease: "linear",
         }}
-        transition={{ type: "spring", stiffness: 200, damping: 20 }}
+        className="absolute w-[96%] h-[96%] rounded-full border border-gold/15"
+      />
+
+      {/* Image Card */}
+      <motion.div
+        initial={{ opacity: 0, y: 40, scale: 0.95 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        whileHover={{
+          scale: 1.02,
+          transition: { duration: 0.35 },
+        }}
+        className="relative overflow-hidden rounded-[34px] border border-white/10 bg-[#111] shadow-[0_40px_80px_rgba(0,0,0,.55)]"
       >
-        <div className="relative w-full h-full rounded-full overflow-hidden border border-gold/20">
-          <img
-            src="/images/hero/biryani_hero.png"
-            alt="Michelin-star Hyderabadi Chicken Biryani"
-            className="w-full h-full object-cover transition-transform duration-[1.5s] ease-out hover:scale-110"
-          />
-          {/* Subtle gold overlay vignette */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_55%,rgba(10,9,7,0.65))] pointer-events-none" />
+        <Image
+          src="/images/biryani.png"
+          alt="Hyderabadi Chicken Dum Biryani"
+          width={620}
+          height={620}
+          priority
+          className="object-cover"
+        />
+
+        {/* Gradient */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/10 to-transparent" />
+
+        {/* Caption */}
+        <div className="absolute bottom-8 left-8">
+          <p className="uppercase tracking-[0.35em] text-[11px] text-gold">
+            Chef Signature
+          </p>
+
+          <h2 className="mt-2 font-display text-4xl text-cream">
+            Hyderabadi
+            <br />
+            Dum Biryani
+          </h2>
         </div>
       </motion.div>
 
-      {/* Orbiting spices */}
-      {spices.map((s) => (
-        <div
-          key={s.label}
-          className="absolute left-1/2 top-1/2 animate-orbit z-30"
-          style={
-            {
-              "--r": `${s.radius}px`,
-              animationDuration: `${s.duration}s`,
-              animationDelay: `${s.delay}s`,
-              marginLeft: -s.size / 2,
-              marginTop: -s.size / 2,
-            } as React.CSSProperties
-          }
-        >
-          <motion.div
-            className="rounded-full bg-gradient-to-br from-gold-bright/35 to-gold/10 border border-gold/45 shadow-[0_0_12px_rgba(201,162,75,0.45)] backdrop-blur-[1px] hover:scale-125 transition-transform"
-            style={{ width: s.size, height: s.size }}
-            title={s.label}
-            whileHover={{ scale: 1.25 }}
-          />
+      {/* Chef Choice Badge */}
+      <motion.div
+        animate={{ y: [0, -8, 0] }}
+        transition={{
+          repeat: Infinity,
+          duration: 5,
+        }}
+        className="absolute top-8 right-0"
+      >
+        <div className="rounded-full border border-gold/30 bg-black/70 backdrop-blur-xl px-5 py-3">
+          <div className="flex items-center gap-2">
+            <Sparkles
+              size={14}
+              className="text-gold"
+            />
+
+            <span className="text-[11px] uppercase tracking-[0.28em] text-gold">
+              Chef's Choice
+            </span>
+          </div>
         </div>
-      ))}
+      </motion.div>
+
+      {/* Fresh Card */}
+      <motion.div
+        animate={{ y: [0, 8, 0] }}
+        transition={{
+          repeat: Infinity,
+          duration: 6,
+        }}
+        className="absolute -bottom-4 left-8"
+      >
+        <div className="rounded-2xl border border-white/10 bg-black/65 backdrop-blur-2xl px-6 py-4 shadow-xl">
+          <div className="flex items-center gap-4">
+
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gold/10">
+              <Clock
+                size={22}
+                className="text-gold"
+              />
+            </div>
+
+            <div>
+              <p className="text-[10px] uppercase tracking-[0.35em] text-gold">
+                Fresh Every Day
+              </p>
+
+              <h3 className="mt-1 text-2xl font-display text-cream">
+                Dum-Sealed Biryani
+              </h3>
+            </div>
+
+          </div>
+        </div>
+      </motion.div>
+
     </div>
   );
 }

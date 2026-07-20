@@ -56,27 +56,11 @@ select:focus-visible {
   text-wrap: balance;
 }
 
-/* ── Premium Input Styles ── */
-.input-luxury {
-  width: 100%;
-  background: #211c15;
-  border: 1px solid rgba(201, 162, 75, 0.15);
-  border-radius: 0.75rem;
-  padding: 0.875rem 1rem;
-  color: #f4eedf;
-  font-size: 0.875rem;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-.input-luxury::placeholder {
-  color: rgba(244, 238, 223, 0.3);
-}
-.input-luxury:focus {
-  outline: none;
-  border-color: rgba(201, 162, 75, 0.5);
-  box-shadow: 0 0 0 3px rgba(201, 162, 75, 0.08);
-}
+/* ===========================
+   PREMIUM ENHANCEMENTS
+   =========================== */
 
-/* ── Custom Scrollbar ── */
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -84,41 +68,79 @@ select:focus-visible {
   background: #17140F;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(201, 162, 75, 0.25);
+  background: rgba(201, 162, 75, 0.35);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(201, 162, 75, 0.45);
+  background: rgba(201, 162, 75, 0.55);
 }
 
-/* ── Range Input Styling ── */
-input[type="range"] {
-  -webkit-appearance: none;
-  appearance: none;
-  height: 4px;
-  background: rgba(201, 162, 75, 0.2);
-  border-radius: 2px;
-  outline: none;
-}
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: #C9A24B;
-  cursor: pointer;
-  border: 2px solid #17140F;
-  box-shadow: 0 0 8px rgba(201, 162, 75, 0.4);
+/* Shimmer Animation */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
 
-/* ── Checkbox Styling ── */
-input[type="checkbox"] {
-  accent-color: #C9A24B;
+.shimmer {
+  background: linear-gradient(90deg, #1a1a1a 25%, #252525 50%, #1a1a1a 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
 }
 
-/* ── Gold Divider ── */
-.divider-gold {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(201, 162, 75, 0.3), transparent);
+/* Glass Morphism */
+.glass {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Card Glow Effect */
+.card-glow {
+  transition: box-shadow 0.4s ease, border-color 0.4s ease;
+}
+.card-glow:hover {
+  box-shadow: 0 0 30px rgba(201, 162, 75, 0.12), 0 8px 32px rgba(0, 0, 0, 0.4);
+  border-color: rgba(201, 162, 75, 0.2);
+}
+
+/* Gradient Text */
+.gradient-text {
+  background: linear-gradient(135deg, #E0BB66, #D97D2B);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Floating Animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Glow Pulse */
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(201, 162, 75, 0.08); }
+  50% { box-shadow: 0 0 40px rgba(201, 162, 75, 0.2); }
+}
+.animate-glow-pulse {
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+/* Slide Up Entrance */
+@keyframes slide-up {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.animate-slide-up {
+  animation: slide-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Decorative gold line */
+.gold-line {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #C9A24B, transparent);
 }

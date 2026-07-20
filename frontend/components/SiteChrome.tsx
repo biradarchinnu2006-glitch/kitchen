@@ -5,7 +5,6 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import ChatWidget from "@/components/ChatWidget";
-import MobileBottomBar from "@/components/MobileBottomBar";
 
 /**
  * The admin dashboard is a separate application surface — it shouldn't
@@ -23,11 +22,10 @@ export default function SiteChrome({ children }: { children: React.ReactNode }) 
   return (
     <>
       <Navbar />
-      <main className="pb-16 md:pb-0">{children}</main>
+      <main>{children}</main>
       <Footer />
       <WhatsAppButton />
       <ChatWidget />
-      <MobileBottomBar />
     </>
   );
 }

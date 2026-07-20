@@ -1,139 +1,144 @@
 import { FoodItem } from "@/lib/types";
 
+let id = 1;
+
+function createItems(
+  category: FoodItem["category"],
+  names: string[],
+  basePrice: number,
+  veg: boolean,
+  spice: FoodItem["spiceLevel"] = "medium"
+): FoodItem[] {
+  return names.map((name, index) => ({
+    id: `item-${id++}`,
+
+    name,
+
+    category,
+
+    description: `Authentic ${name} prepared using premium ingredients and traditional recipes.`,
+
+    price: basePrice + (index % 6) * 20,
+
+    calories: 180 + index * 15,
+
+    spiceLevel: spice,
+
+    isVeg: veg,
+
+    isSignature: index % 8 === 0,
+
+
+    // Premium menu features
+    image: `/food/${name
+      .toLowerCase()
+      .replace(/[()]/g, "")
+      .replace(/\s+/g, "-")}.jpg`,
+
+
+    rating: Number((4.2 + (index % 8) * 0.1).toFixed(1)),
+
+
+    bestseller: index % 5 === 0,
+  }));
+}
+
+
+// BREAKFAST
+
+const breakfast = createItems(
+  "breakfast",
+  [
+    "Idli",
+    "Ghee Idli",
+    "Mini Idli",
+    "Sambar Idli",
+    "Vada",
+    "Medu Vada",
+    "Masala Dosa",
+    "Plain Dosa",
+    "Onion Dosa",
+    "Ghee Dosa",
+    "Rava Dosa",
+    "Pesarattu",
+    "Set Dosa",
+    "Poori Bhaji",
+    "Upma",
+    "Pongal",
+    "Uttapam",
+    "Chapati",
+    "Paneer Paratha",
+    "Aloo Paratha"
+  ],
+  60,
+  true,
+  "mild"
+);
+
+
+// BIRYANI
+
+const chickenBiryani = createItems(
+  "biryani",
+  [
+    "Chicken Dum Biryani",
+    "Chicken Fry Biryani",
+    "Chicken 65 Biryani",
+    "Chicken Tikka Biryani",
+    "Boneless Chicken Biryani",
+    "Mughlai Chicken Biryani",
+    "Butter Chicken Biryani",
+    "Green Chicken Biryani",
+    "Special Chicken Biryani",
+    "Family Chicken Biryani",
+    "Hyderabadi Chicken Biryani",
+    "Spicy Chicken Biryani",
+    "Supreme Chicken Biryani",
+    "Chef Special Chicken Biryani",
+    "Premium Chicken Biryani"
+  ],
+  260,
+  false,
+  "medium"
+);
+
+
+// STARTERS
+
+const starters = createItems(
+  "starters",
+  [
+    "Chicken 65",
+    "Chicken Lollipop",
+    "Dragon Chicken",
+    "Chicken Majestic",
+    "Chicken Manchurian",
+    "Chilli Chicken",
+    "Pepper Chicken",
+    "Apollo Fish",
+    "Fish Fry",
+    "Prawns Fry",
+    "Paneer 65",
+    "Paneer Tikka",
+    "Veg Manchurian",
+    "Gobi 65",
+    "Crispy Corn",
+    "Spring Rolls",
+    "Mushroom Pepper Fry",
+    "Baby Corn Fry",
+    "Chicken Wings",
+    "Tandoori Chicken"
+  ],
+  180,
+  false,
+  "hot"
+);
+
+
+// FINAL MENU EXPORT
+
 export const menuData: FoodItem[] = [
-  {
-    id: "chicken-biryani",
-    name: "Chicken Biryani",
-    category: "biryani",
-    description:
-      "Long-grain basmati layered with slow-cooked chicken, saffron and fried onions, dum-sealed for two hours.",
-    price: 320,
-    calories: 780,
-    spiceLevel: "medium",
-    isVeg: false,
-    isSignature: true,
-    image: "/food/chicken-biryani.jpg",
-  },
-  {
-    id: "mutton-biryani",
-    name: "Mutton Biryani",
-    category: "biryani",
-    description: "Tender mutton on the bone, dum-cooked with whole spices and mint.",
-    price: 420,
-    calories: 860,
-    spiceLevel: "hot",
-    isVeg: false,
-    image: "/food/mutton-biryani.jpg",
-  },
-  {
-    id: "paneer-biryani",
-    name: "Paneer Biryani",
-    category: "biryani",
-    description: "Home-set paneer, cashew and saffron rice, mild enough for the whole table.",
-    price: 280,
-    calories: 640,
-    spiceLevel: "mild",
-    isVeg: true,
-    image: "/food/paneer-biryani.jpg",
-  },
-  {
-    id: "chicken-65",
-    name: "Chicken 65",
-    category: "starters",
-    description: "Curry-leaf and red-chilli fried chicken, crisp outside, juicy inside.",
-    price: 240,
-    calories: 410,
-    spiceLevel: "hot",
-    isVeg: false,
-    image: "/food/chicken-65.jpg",
-  },
-  {
-    id: "tandoori-chicken",
-    name: "Tandoori Chicken",
-    category: "starters",
-    description: "Yoghurt and kashmiri-chilli marinated chicken, charred over coals.",
-    price: 300,
-    calories: 460,
-    spiceLevel: "medium",
-    isVeg: false,
-    image: "/food/tandoori-chicken.jpg",
-  },
-  {
-    id: "butter-chicken",
-    name: "Butter Chicken",
-    category: "curries",
-    description: "Tomato-cashew gravy finished with cream and a spoon of butter.",
-    price: 340,
-    calories: 620,
-    spiceLevel: "mild",
-    isVeg: false,
-    isSignature: true,
-    image: "/food/butter-chicken.jpg",
-  },
-  {
-    id: "mutton-curry",
-    name: "Mutton Curry",
-    category: "curries",
-    description: "Slow-braised mutton in a coconut-and-spice gravy, a family recipe.",
-    price: 380,
-    calories: 590,
-    spiceLevel: "hot",
-    isVeg: false,
-    image: "/food/mutton-curry.jpg",
-  },
-  {
-    id: "naan",
-    name: "Butter Naan",
-    category: "breads",
-    description: "Tandoor-baked leavened bread brushed with ghee.",
-    price: 60,
-    calories: 260,
-    spiceLevel: "mild",
-    isVeg: true,
-    image: "/food/naan.jpg",
-  },
-  {
-    id: "jeera-rice",
-    name: "Jeera Rice",
-    category: "rice",
-    description: "Basmati tempered with cumin and whole spices.",
-    price: 160,
-    calories: 320,
-    spiceLevel: "mild",
-    isVeg: true,
-    image: "/food/jeera-rice.jpg",
-  },
-  {
-    id: "gulab-jamun",
-    name: "Gulab Jamun",
-    category: "desserts",
-    description: "Milk-solid dumplings soaked in cardamom-rose syrup, served warm.",
-    price: 120,
-    calories: 380,
-    spiceLevel: "mild",
-    isVeg: true,
-    image: "/food/gulab-jamun.jpg",
-  },
-  {
-    id: "lassi",
-    name: "Sweet Lassi",
-    category: "cold-drinks",
-    description: "Churned yoghurt, a little sugar, a lot of nostalgia.",
-    price: 90,
-    calories: 210,
-    spiceLevel: "mild",
-    isVeg: true,
-    image: "/food/lassi.jpg",
-  },
-  {
-    id: "masala-chai",
-    name: "Masala Chai",
-    category: "hot-drinks",
-    description: "Hand-ground spice blend simmered with milk, the way Surekha makes it at home.",
-    price: 50,
-    calories: 90,
-    spiceLevel: "mild",
-    isVeg: true,
-    image: "/food/masala-chai.jpg",
-  },
+  ...breakfast,
+  ...starters,
+  ...chickenBiryani,
 ];

@@ -47,47 +47,39 @@ const config: Config = {
         },
         orbit: {
           "0%": { transform: "rotate(0deg) translateX(var(--r)) rotate(0deg)" },
-          "100%": { transform: "rotate(360deg) translateX(var(--r)) rotate(-360deg)" },
+          "100%": {
+            transform: "rotate(360deg) translateX(var(--r)) rotate(-360deg)",
+          },
         },
         "fade-up": {
           "0%": { opacity: "0", transform: "translateY(24px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
-        "fade-in": {
-          "0%": { opacity: "0" },
-          "100%": { opacity: "1" },
-        },
         shimmer: {
           "0%": { backgroundPosition: "-200% 0" },
           "100%": { backgroundPosition: "200% 0" },
         },
-        pulse_gold: {
-          "0%, 100%": { boxShadow: "0 0 0 0 rgba(201, 162, 75, 0.4)" },
-          "50%": { boxShadow: "0 0 0 12px rgba(201, 162, 75, 0)" },
+        "glow-pulse": {
+          "0%, 100%": { boxShadow: "0 0 20px rgba(201,162,75,0.08)" },
+          "50%": { boxShadow: "0 0 40px rgba(201,162,75,0.2)" },
         },
         float: {
           "0%, 100%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(-8px)" },
+          "50%": { transform: "translateY(-10px)" },
         },
         "slide-up": {
-          "0%": { opacity: "0", transform: "translateY(16px)" },
+          "0%": { opacity: "0", transform: "translateY(30px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
-        },
-        "scale-in": {
-          "0%": { opacity: "0", transform: "scale(0.95)" },
-          "100%": { opacity: "1", transform: "scale(1)" },
         },
       },
       animation: {
         rise: "rise 3.2s ease-in-out infinite",
         orbit: "orbit 18s linear infinite",
         "fade-up": "fade-up 0.7s cubic-bezier(0.22,1,0.36,1) forwards",
-        "fade-in": "fade-in 0.5s ease-out forwards",
-        shimmer: "shimmer 2s linear infinite",
-        pulse_gold: "pulse_gold 2s ease-in-out infinite",
+        shimmer: "shimmer 1.5s ease-in-out infinite",
+        "glow-pulse": "glow-pulse 3s ease-in-out infinite",
         float: "float 3s ease-in-out infinite",
-        "slide-up": "slide-up 0.5s cubic-bezier(0.22,1,0.36,1) forwards",
-        "scale-in": "scale-in 0.3s ease-out forwards",
+        "slide-up": "slide-up 0.6s cubic-bezier(0.22,1,0.36,1) forwards",
       },
     },
   },

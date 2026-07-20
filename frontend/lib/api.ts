@@ -1,7 +1,7 @@
 import { ContactPayload, FoodItem, ReservationPayload } from "./types";
 import { menuData } from "@/data/menu";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://kitchen-wd6d.onrender.com";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 async function request<T>(path: string, options?: RequestInit): Promise<T> {
   const res = await fetch(`${API_URL}${path}`, {
@@ -44,6 +44,26 @@ export async function submitContactMessage(payload: ContactPayload) {
     method: "POST",
     body: JSON.stringify(payload),
   });
+}
+
+export async function fetchReviews() {
+  try {
+    return await request<import("./types").ReviewItem[]>("/reviews");
+  } catch {
+    return null; // Signals fallback to localStorage/initial state
+  }
+}
+
+export async function submitReview(payload: import("./types").ReviewPayload) {
+  try {
+    return await request("/reviews", {
+      method: "POST",
+      body: JSON.stringify(payload),
+    });
+  } catch {
+    // If backend doesn't support reviews endpoint, caller handles localStorage
+    return { status: "local_only" };
+  }
 }
 
 export function whatsappOrderLink(itemName?: string) {
