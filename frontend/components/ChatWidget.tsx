@@ -17,7 +17,7 @@ const localAnswers: Record<string, string> = {
   "reservation help": "Head to the Reservations page, or tell me your date, time and party size here and I'll note it down.",
 };
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://kitchen-wd6d.onrender.com";
 
 export default function ChatWidget() {
   const [open, setOpen] = useState(false);

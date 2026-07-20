@@ -1,7 +1,7 @@
 import { ContactPayload, FoodItem, ReservationPayload } from "./types";
 import { menuData } from "@/data/menu";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://kitchen-wd6d.onrender.com";
 
 async function request<T>(path: string, options?: RequestInit): Promise<T> {
   const res = await fetch(`${API_URL}${path}`, {
